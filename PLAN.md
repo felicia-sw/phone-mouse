@@ -312,7 +312,7 @@ Done when:
 - Manual checklist in PR: typing appears in a Mac text field including emoji and accents;
   backspace/enter/arrows work; volume and play/pause work.
 
-### - [ ] T6 — README and run instructions · Sonnet 5.5
+### - [x] T6 — README and run instructions · Sonnet 5.5
 
 Depends on: T5.
 
