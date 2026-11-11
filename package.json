@@ -5,12 +5,14 @@
   "type": "module",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests",
+    "test": "vitest run --exclude 'tests/client/e2e/**'",
     "format:check": "prettier --check --no-error-on-unmatched-pattern src/phone_mouse/static tests/client",
     "format": "prettier --write src/phone_mouse/static tests/client",
-    "check": "npm run typecheck && npm run test && npm run format:check"
+    "check": "npm run typecheck && npm run test && npm run format:check",
+    "e2e": "playwright test tests/client/e2e"
   },
   "devDependencies": {
+    "@playwright/test": "1.63.0",
     "prettier": "^3.3.0",
     "typescript": "^5.6.0",
     "vitest": "^2.1.0"

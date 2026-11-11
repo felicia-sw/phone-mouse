@@ -1,0 +1,171 @@
+:root {
+  color-scheme: dark;
+  --bg: #121418;
+  --pad: #1b1e24;
+  --pad-edge: #2a2e36;
+  --bar: #181a1f;
+  --button: #262a32;
+  --button-active: #343944;
+  --text: #e8eaee;
+  --muted: #8b919c;
+  --ok: #3ccf7a;
+  --warn: #f2b84b;
+  --error: #ef5f5f;
+  --gap: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: var(--bg);
+  color: var(--text);
+}
+
+body {
+  /* The page never scrolls, zooms or bounces; every touch is a trackpad gesture. */
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  padding: max(var(--gap), env(safe-area-inset-top)) max(var(--gap), env(safe-area-inset-right))
+    max(var(--gap), env(safe-area-inset-bottom)) max(var(--gap), env(safe-area-inset-left));
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  touch-action: manipulation;
+}
+
+.top {
+  display: flex;
+  justify-content: center;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--bar);
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--warn);
+}
+
+.status[data-state='connected'] .dot {
+  background: var(--ok);
+}
+
+.status[data-state='replaced'] .dot,
+.status[data-state='unauthorized'] .dot {
+  background: var(--error);
+}
+
+.trackpad {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--pad-edge);
+  border-radius: 18px;
+  background: var(--pad);
+}
+
+.hint {
+  margin: 0;
+  padding: 24px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: center;
+  pointer-events: none;
+}
+
+.bar {
+  display: flex;
+  gap: var(--gap);
+  height: 64px;
+}
+
+.bar-button {
+  flex: 0 0 64px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 14px;
+  background: var(--button);
+  font-size: 16px;
+}
+
+.bar-button.mouse-button {
+  flex: 1;
+}
+
+.bar-button:active {
+  background: var(--button-active);
+}
+
+.sheet {
+  width: min(420px, calc(100vw - 32px));
+  padding: 20px;
+  border: 1px solid var(--pad-edge);
+  border-radius: 18px;
+  background: var(--bar);
+  color: var(--text);
+}
+
+.sheet::backdrop {
+  background: rgb(0 0 0 / 60%);
+}
+
+.sheet h2 {
+  margin: 0 0 16px;
+  font-size: 18px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 14px 0 8px;
+}
+
+.sheet input[type='range'] {
+  width: 100%;
+}
+
+.sheet input[type='checkbox'] {
+  width: 22px;
+  height: 22px;
+}
+
+.done {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--button-active);
+}

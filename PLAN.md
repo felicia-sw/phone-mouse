@@ -280,7 +280,7 @@ Done when (each has a test):
 - Tap-then-drag sends `button down` once and always sends `button up` on lift or touch-cancel.
 - `accel` returns `sensitivity × 1` at speed 0 and never exceeds `sensitivity × 4`.
 
-### - [ ] T4 — Client page and connection · Sonnet 5.5
+### - [x] T4 — Client page and connection · Sonnet 5.5
 
 Depends on: T1 (uses only §3; integrate with T3 when it merges — whichever lands second wires
 `main.js`).
