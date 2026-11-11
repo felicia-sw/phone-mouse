@@ -232,7 +232,7 @@ Done when:
 - CI runs on push and pull request and is green on both jobs.
 - `uv run phone-mouse --version` prints the version.
 
-### - [ ] T1 — Protocol, fake driver, session, app · Opus 5.5 (high)
+### - [x] T1 — Protocol, fake driver, session, app · Opus 5.5 (high)
 
 Depends on: T0.
 
