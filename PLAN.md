@@ -298,7 +298,7 @@ Done when:
 - Manual checklist in PR for the human on a real iPhone: no page zoom/scroll/bounce, no text
   selection, safe areas respected, reconnects after locking and unlocking the phone.
 
-### - [ ] T5 — Keyboard and media keys · Sonnet 5.5
+### - [x] T5 — Keyboard and media keys · Sonnet 5.5
 
 Depends on: T2, T3, T4.
 

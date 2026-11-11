@@ -110,7 +110,7 @@ button {
 }
 
 .bar-button {
-  flex: 0 0 64px;
+  flex: 0 0 54px;
   display: grid;
   place-items: center;
   border: 0;
@@ -168,4 +168,87 @@ button {
   border: 0;
   border-radius: 12px;
   background: var(--button-active);
+}
+
+.bar-button:not(.mouse-button) {
+  font-size: 20px;
+}
+
+.bar-button[aria-expanded='true'] {
+  background: var(--button-active);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+.text-row {
+  display: flex;
+  gap: var(--gap);
+}
+
+.text-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--pad-edge);
+  border-radius: 12px;
+  background: var(--pad);
+  color: var(--text);
+  /* 16px or more stops iOS Safari from zooming into the field on focus. */
+  font: inherit;
+  font-size: 16px;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.keys {
+  display: grid;
+  /* 12 columns: six keys per row, a wide space bar, and four arrows on one row. */
+  grid-template-columns: repeat(12, 1fr);
+  gap: 8px;
+}
+
+.keys .chip {
+  grid-column: span 2;
+}
+
+.keys .chip.arrow {
+  grid-column: span 3;
+}
+
+.keys.media .chip {
+  grid-column: span 4;
+}
+
+.chip {
+  min-height: 44px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--button);
+  font-size: 17px;
+}
+
+.chip:active,
+.chip[aria-pressed='true'] {
+  background: var(--button-active);
+}
+
+.chip[aria-pressed='true'] {
+  outline: 2px solid var(--ok);
+}
+
+.keys .chip.wide {
+  grid-column: span 8;
+}
+
+.chip.send {
+  padding: 0 16px;
 }

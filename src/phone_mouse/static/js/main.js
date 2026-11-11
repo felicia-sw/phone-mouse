@@ -2,6 +2,7 @@
 
 import { MotionBatcher } from './batcher.js';
 import { Connection, STATUS_TEXT, takeToken } from './connection.js';
+import { Modifiers, isKey, isMediaKey, isMod, mediaMessage, textMessages } from './controls.js';
 import { GestureRecognizer } from './gestures.js';
 import { button, click } from './protocol.js';
 import { SENSITIVITY_MAX, SENSITIVITY_MIN, loadSettings, saveSettings } from './settings.js';
@@ -192,3 +193,63 @@ function safeStorage(get) {
     return null;
   }
 }
+
+// Keyboard and media panels (T5)
+
+const modifiers = new Modifiers();
+const keyboardPanel = element('keyboard-panel', HTMLElement);
+const mediaPanel = element('media-panel', HTMLElement);
+const keyboardToggle = element('keyboard-toggle', HTMLButtonElement);
+const mediaToggle = element('media-toggle', HTMLButtonElement);
+const textInput = element('text-input', HTMLInputElement);
+
+/**
+ * Show one panel (or none); the trackpad shrinks to make room.
+ * @param {HTMLElement | null} panel
+ */
+function showPanel(panel) {
+  for (const [candidate, toggle] of [
+    [keyboardPanel, keyboardToggle],
+    [mediaPanel, mediaToggle],
+  ]) {
+    const open = candidate === panel;
+    /** @type {HTMLElement} */ (candidate).hidden = !open;
+    /** @type {HTMLElement} */ (toggle).setAttribute('aria-expanded', String(open));
+  }
+  // Focusing inside the tap handler is what lets iOS show the on-screen keyboard.
+  if (panel === keyboardPanel) textInput.focus();
+  else textInput.blur();
+}
+
+keyboardToggle.addEventListener('click', () =>
+  showPanel(keyboardPanel.hidden ? keyboardPanel : null),
+);
+mediaToggle.addEventListener('click', () => showPanel(mediaPanel.hidden ? mediaPanel : null));
+
+element('text-form', HTMLFormElement).addEventListener('submit', (event) => {
+  event.preventDefault();
+  for (const message of textMessages(textInput.value)) connection?.send(message);
+  textInput.value = '';
+});
+
+keyboardPanel.addEventListener('click', (event) => {
+  const target = event.target instanceof Element ? event.target.closest('button') : null;
+  if (!target) return;
+  const mod = target.dataset['mod'];
+  const pressed = target.dataset['key'];
+  if (isMod(mod)) {
+    target.setAttribute('aria-pressed', String(modifiers.toggle(mod)));
+  } else if (isKey(pressed)) {
+    flushMotion();
+    connection?.send(modifiers.press(pressed));
+    for (const modButton of keyboardPanel.querySelectorAll('[data-mod]')) {
+      modButton.setAttribute('aria-pressed', 'false');
+    }
+  }
+});
+
+mediaPanel.addEventListener('click', (event) => {
+  const target = event.target instanceof Element ? event.target.closest('button') : null;
+  const mediaKey = target instanceof HTMLElement ? target.dataset['media'] : undefined;
+  if (isMediaKey(mediaKey)) connection?.send(mediaMessage(mediaKey));
+});

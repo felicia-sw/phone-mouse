@@ -39,9 +39,73 @@
       </p>
     </main>
 
+    <section id="keyboard-panel" class="panel" aria-label="Keyboard" hidden>
+      <form id="text-form" class="text-row">
+        <input
+          id="text-input"
+          type="text"
+          autocomplete="off"
+          enterkeyhint="send"
+          placeholder="Type here, then Send"
+          aria-label="Text to type on the Mac"
+        />
+        <button class="chip send" type="submit">Send</button>
+      </form>
+      <div class="keys">
+        <button class="chip mod" type="button" data-mod="cmd" aria-pressed="false">⌘</button>
+        <button class="chip mod" type="button" data-mod="shift" aria-pressed="false">⇧</button>
+        <button class="chip mod" type="button" data-mod="alt" aria-pressed="false">⌥</button>
+        <button class="chip mod" type="button" data-mod="ctrl" aria-pressed="false">⌃</button>
+        <button class="chip" type="button" data-key="escape">esc</button>
+        <button class="chip" type="button" data-key="tab">⇥</button>
+        <button class="chip" type="button" data-key="backspace" aria-label="Backspace">⌫</button>
+        <button class="chip" type="button" data-key="enter" aria-label="Enter">⏎</button>
+        <button class="chip wide" type="button" data-key="space">space</button>
+        <button class="chip arrow" type="button" data-key="left" aria-label="Left arrow">←</button>
+        <button class="chip arrow" type="button" data-key="up" aria-label="Up arrow">↑</button>
+        <button class="chip arrow" type="button" data-key="down" aria-label="Down arrow">↓</button>
+        <button class="chip arrow" type="button" data-key="right" aria-label="Right arrow">
+          →
+        </button>
+      </div>
+    </section>
+
+    <section id="media-panel" class="panel" aria-label="Media" hidden>
+      <div class="keys media">
+        <button class="chip" type="button" data-media="prev" aria-label="Previous track">⏮</button>
+        <button class="chip" type="button" data-media="playpause" aria-label="Play or pause">
+          ⏯
+        </button>
+        <button class="chip" type="button" data-media="next" aria-label="Next track">⏭</button>
+        <button class="chip" type="button" data-media="voldown" aria-label="Volume down">🔉</button>
+        <button class="chip" type="button" data-media="mute" aria-label="Mute">🔇</button>
+        <button class="chip" type="button" data-media="volup" aria-label="Volume up">🔊</button>
+      </div>
+    </section>
+
     <nav class="bar" aria-label="Controls">
       <button id="left-button" class="bar-button mouse-button" type="button">Left</button>
       <button id="right-button" class="bar-button mouse-button" type="button">Right</button>
+      <button
+        id="keyboard-toggle"
+        class="bar-button"
+        type="button"
+        aria-label="Keyboard"
+        aria-controls="keyboard-panel"
+        aria-expanded="false"
+      >
+        ⌨
+      </button>
+      <button
+        id="media-toggle"
+        class="bar-button"
+        type="button"
+        aria-label="Media keys"
+        aria-controls="media-panel"
+        aria-expanded="false"
+      >
+        ♫
+      </button>
       <button id="settings-button" class="bar-button" type="button" aria-label="Settings">
         <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
           <path
