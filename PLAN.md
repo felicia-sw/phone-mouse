@@ -189,6 +189,35 @@ the human must run the PR's manual checklist.
 
 Order: `T0 → T1 → (T2, T3, T4 in parallel) → T5 → T6 → T7`.
 
+### File scope per task
+
+A task may create or edit only these paths (plus its own tests under `tests/` and its checkbox in
+this file). Touching anything else fails review.
+
+| Task | May edit |
+| --- | --- |
+| T0 | Root config files, `.github/`, empty package tree, `cli.py` |
+| T1 | `protocol.py`, `session.py`, `app.py`, `pairing.py`, `net.py`, `cli.py`, `input/base.py`, `input/fake.py`, `input/__init__.py`, placeholder `static/index.html` |
+| T2 | `input/macos.py`, `input/__init__.py` |
+| T3 | `static/js/gestures.js`, `static/js/accel.js`, `static/js/protocol.js` |
+| T4 | `static/` except the three T3 files |
+| T5 | `static/` (keyboard and media panels); `input/macos.py` for gap fixes only |
+| T6 | `README.md` |
+| T7 | Anything, but only to fix a written finding |
+
+### Review gate (every task T0–T6)
+
+The session that wrote a PR never approves it.
+
+1. A **fresh** session (Opus 5.5, high effort) is started with the review prompt in §7.
+2. It checks: every "Done when" line has a passing test or a listed manual check; the diff stays
+   inside the task's file scope; the rules in `CLAUDE.md` hold; the full check is green. It runs
+   `/code-review high` on the PR.
+3. It posts findings rated `blocker`, `high`, `medium` or `low`.
+4. Merge only when there is no `blocker` or `high` finding. Otherwise the implementer session
+   fixes them on the same branch and a fresh review runs again.
+5. After 3 failed rounds, stop and ask the human.
+
 ### - [ ] T0 — Scaffold and CI · Sonnet 5.5
 
 Depends on: nothing.
@@ -312,7 +341,17 @@ Done when: review findings are fixed or filed, and the full check is green.
 HTTPS with a local certificate (`mkcert`; needs a root certificate installed on the iPhone) so the
 token is encrypted on the Wi-Fi; a menu-bar app so no terminal is needed; three-finger gestures.
 
-## 7. Prompt to start a task
+## 7. Prompts
+
+To review a task's PR, paste this into a fresh session (never the one that wrote it):
+
+```
+Read CLAUDE.md and PLAN.md in full. Review the pull request for task T<n> by following
+"Review gate" in PLAN.md §6. Do not change code. Post your findings with severities and end with
+one line: PASS or FAIL.
+```
+
+To start a task:
 
 Paste this into a fresh Claude Code session opened in the repo, with the model from §5 selected:
 

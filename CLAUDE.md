@@ -12,9 +12,12 @@ protocol, and the task list. Do exactly one task per session.
 2. Branch from `main`: `git checkout -b <task-id>-<short-name>` (e.g. `t1-protocol-session`).
 3. Build only what the task lists. Anything else goes in the PR description under "Follow-ups".
 4. Run the full check (below). It must pass before you commit.
-5. Open one PR per task. Title: `T<n>: <task title>`. In the body, tick each acceptance criterion
-   and paste the check output.
+5. Open one PR per task. Title: `T<n>: <task title>`. The body must contain: each "Done when"
+   line with pass/fail and the test that proves it, the list of changed paths, the commands you
+   ran with their output, and any manual checklist for the human.
 6. Tick the task's checkbox in `PLAN.md` in the same PR.
+7. Stay inside the task's file scope (`PLAN.md` §6). Do not merge your own PR: a fresh session
+   reviews it under the "Review gate" in `PLAN.md` §6.
 
 ## The full check
 
