@@ -218,7 +218,7 @@ The session that wrote a PR never approves it.
    fixes them on the same branch and a fresh review runs again.
 5. After 3 failed rounds, stop and ask the human.
 
-### - [ ] T0 — Scaffold and CI · Sonnet 5.5
+### - [x] T0 — Scaffold and CI · Sonnet 5.5
 
 Depends on: nothing.
 
