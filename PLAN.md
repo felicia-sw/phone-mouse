@@ -251,7 +251,7 @@ Done when (each has a test):
 - The token never appears in log output (test captures logs).
 - `uv run phone-mouse --dry-run` starts, prints URL + QR code, and `/healthz` returns 200.
 
-### - [ ] T2 — macOS driver · Opus 5.5 (high) · run on the Mac if possible
+### - [x] T2 — macOS driver · Opus 5.5 (high) · run on the Mac if possible
 
 Depends on: T1.
 

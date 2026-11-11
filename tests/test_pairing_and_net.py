@@ -1,3 +1,4 @@
+import platform
 import socket
 from typing import Any
 
@@ -72,6 +73,9 @@ def test_create_driver_dry_run_gives_the_fake() -> None:
     assert isinstance(create_driver(dry_run=True), FakeDriver)
 
 
-def test_create_driver_without_a_real_driver_raises_a_clear_error() -> None:
+def test_create_driver_without_a_real_driver_raises_a_clear_error(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(platform, "system", lambda: "Linux")
     with pytest.raises(DriverUnavailableError, match="--dry-run"):
         create_driver(dry_run=False)
