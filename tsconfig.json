@@ -10,7 +10,9 @@
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": []
   },
-  "include": ["src/phone_mouse/static/js/**/*.js", "tests/client/**/*.js"]
+  "include": ["src/phone_mouse/static/js/**/*.js", "tests/client/**/*.js"],
+  "exclude": ["tests/client/e2e"]
 }

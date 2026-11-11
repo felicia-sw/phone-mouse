@@ -2,10 +2,68 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>phone-mouse</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; connect-src 'self' ws: wss:; img-src 'self' data:; object-src 'none'; base-uri 'none'"
+    />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="theme-color" content="#121418" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Phone Mouse" />
+    <title>Phone Mouse</title>
+    <link rel="manifest" href="/static/manifest.webmanifest" />
+    <link rel="icon" href="/static/icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="/static/icons/icon-180.png" />
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script type="module" src="/static/js/main.js"></script>
   </head>
   <body>
-    <p>phone-mouse is running. The trackpad page is not built yet.</p>
+    <header class="top">
+      <button id="status" class="status" type="button" data-state="connecting" aria-live="polite">
+        <span class="dot" aria-hidden="true"></span>
+        <span id="status-text">Connecting…</span>
+      </button>
+    </header>
+
+    <main id="trackpad" class="trackpad" aria-label="Trackpad">
+      <p class="hint">
+        One finger moves the pointer. Tap to click.<br />
+        Two fingers scroll. Two-finger tap right-clicks.<br />
+        Tap, then touch again and move to drag.
+      </p>
+    </main>
+
+    <nav class="bar" aria-label="Controls">
+      <button id="left-button" class="bar-button mouse-button" type="button">Left</button>
+      <button id="right-button" class="bar-button mouse-button" type="button">Right</button>
+      <button id="settings-button" class="bar-button" type="button" aria-label="Settings">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path
+            fill="currentColor"
+            d="M3 6h11.2a2.5 2.5 0 0 1 4.6 0H21v2h-2.2a2.5 2.5 0 0 1-4.6 0H3V6Zm0 10h2.2a2.5 2.5 0 0 1 4.6 0H21v2H9.8a2.5 2.5 0 0 1-4.6 0H3v-2Z"
+          />
+        </svg>
+      </button>
+    </nav>
+
+    <dialog id="settings" class="sheet" aria-labelledby="settings-title">
+      <h2 id="settings-title">Settings</h2>
+      <label class="row">
+        <span>Pointer speed</span>
+        <output id="sensitivity-value" for="sensitivity">1.5×</output>
+      </label>
+      <input id="sensitivity" type="range" step="0.1" aria-label="Pointer speed" />
+      <label class="row">
+        <span>Natural scrolling</span>
+        <input id="natural-scroll" type="checkbox" role="switch" />
+      </label>
+      <button id="settings-done" class="done" type="button">Done</button>
+    </dialog>
   </body>
 </html>
