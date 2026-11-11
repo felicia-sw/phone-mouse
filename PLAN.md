@@ -266,7 +266,7 @@ Done when:
   or `websocat`: cursor moves and stops at screen edges; single, double and right click work;
   drag moves a Finder window; scroll works in both axes; missing permission prints the warning.
 
-### - [ ] T3 — Gestures and acceleration · Opus 5.5 (high)
+### - [x] T3 — Gestures and acceleration · Opus 5.5 (high)
 
 Depends on: T1.
 
