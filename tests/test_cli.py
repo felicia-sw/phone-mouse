@@ -1,4 +1,5 @@
 import os
+import platform
 import socket
 import subprocess
 import sys
@@ -27,8 +28,9 @@ def test_invalid_port_is_rejected(port: str) -> None:
 
 
 def test_without_dry_run_and_no_real_driver_exits_with_a_clear_error(
-    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
+    monkeypatch.setattr(platform, "system", lambda: "Linux")
     assert cli.main(["--host", "127.0.0.1"]) == 2
     assert "--dry-run" in capsys.readouterr().err
 
