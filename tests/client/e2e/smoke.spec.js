@@ -80,6 +80,43 @@ test('a one-finger drag and a tap reach the dry-run driver', async ({ page }) =>
   await expect.poll(() => serverLog.slice(before)).toContain("dry-run: click('left', 1)");
 });
 
+test('every keyboard and media control reaches the dry-run driver', async ({ page }) => {
+  await page.goto(pairingUrl);
+  await expect(page.locator('#status-text')).toHaveText('Connected');
+  const before = serverLog.length;
+  const log = () => serverLog.slice(before);
+
+  await page.click('#keyboard-toggle');
+  await expect(page.locator('#keyboard-panel')).toBeVisible();
+  await page.fill('#text-input', 'héllo 😀');
+  await page.click('#text-form button[type=submit]');
+  await expect(page.locator('#text-input')).toHaveValue('');
+  await expect.poll(log).toContain('dry-run: type_text (7 characters)');
+
+  await page.fill('#text-input', 'a'.repeat(300));
+  await page.press('#text-input', 'Enter');
+  await expect.poll(log).toContain('dry-run: type_text (256 characters)');
+  await expect.poll(log).toContain('dry-run: type_text (44 characters)');
+
+  await page.click('[data-mod=cmd]');
+  await expect(page.locator('[data-mod=cmd]')).toHaveAttribute('aria-pressed', 'true');
+  await page.click('[data-key=left]');
+  await expect(page.locator('[data-mod=cmd]')).toHaveAttribute('aria-pressed', 'false');
+  await expect.poll(log).toContain("dry-run: key('left', frozenset({'cmd'}))");
+
+  for (const name of ['enter', 'backspace', 'tab', 'escape', 'space', 'up', 'down', 'right']) {
+    await page.click(`[data-key=${name}]`);
+    await expect.poll(log).toContain(`dry-run: key('${name}', frozenset())`);
+  }
+
+  await page.click('#media-toggle');
+  await expect(page.locator('#keyboard-panel')).toBeHidden();
+  for (const name of ['playpause', 'next', 'prev', 'volup', 'voldown', 'mute']) {
+    await page.click(`[data-media=${name}]`);
+    await expect.poll(log).toContain(`dry-run: media('${name}',)`);
+  }
+});
+
 test('a wrong token shows "Scan the QR code again"', async ({ page }) => {
   await page.goto(pairingUrl.replace(/#.*/, '#wrong-token'));
   await expect(page.locator('#status-text')).toHaveText('Scan the QR code again');
