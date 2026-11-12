@@ -2,6 +2,7 @@
 name = "phone-mouse"
 version = "0.1.0"
 description = "Use an iPhone as a trackpad for a Mac."
+readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "fastapi>=0.115",
@@ -9,6 +10,8 @@ dependencies = [
     "pydantic>=2.7",
     "qrcode>=7.4",
     "pyobjc-framework-Quartz>=10.3; sys_platform == 'darwin'",
+    # NSEvent, used for media keys (input/macos.py).
+    "pyobjc-framework-Cocoa>=10.3; sys_platform == 'darwin'",
 ]
 
 [project.scripts]
@@ -16,9 +19,10 @@ phone-mouse = "phone_mouse.cli:main"
 
 [dependency-groups]
 dev = [
-    "httpx>=0.27",
+    "httpx2>=2.16",
     "mypy>=1.11",
     "pytest>=8.3",
+    "pytest-timeout>=2.3",
     "ruff>=0.6",
 ]
 
@@ -58,3 +62,5 @@ ignore_missing_imports = true
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-ra --strict-markers"
+# A broken WebSocket test can block forever waiting for a close frame; fail it instead.
+timeout = 30
